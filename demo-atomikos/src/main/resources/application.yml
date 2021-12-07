@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: demo-atomikos
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册
+  datasource:
+    ds1:
+      url: jdbc:mysql://localhost:13306/demo_distributed_a?userUnicode=true&characterEncoding=utf8
+      username: root
+      password: 123456
+      mapper-locations: classpath*:mapper/ds1/*.xml
+    ds2:
+      url: jdbc:mysql://localhost:23306/demo_distributed_b?userUnicode=true&characterEncoding=utf8
+      username: root
+      password: 123456
+      mapper-locations: classpath*:mapper/ds2/*.xml
