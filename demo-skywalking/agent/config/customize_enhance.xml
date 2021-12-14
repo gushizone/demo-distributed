@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enhanced>
+
+    <!-- -Dskywalking.plugin.customize.enhance_file=<绝对路径>/agent/config/customize_enhance.xml -->
+    <!--<class class_name="tk.gushizone.distributed.service.impl.ItemServiceImpl">-->
+    <!--    <method method="find()" static="false">-->
+    <!--    </method>-->
+    <!--</class>-->
+
+</enhanced>

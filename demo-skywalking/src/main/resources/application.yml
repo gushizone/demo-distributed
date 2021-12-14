@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: demo-skywalking
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo_skywalking?userUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
