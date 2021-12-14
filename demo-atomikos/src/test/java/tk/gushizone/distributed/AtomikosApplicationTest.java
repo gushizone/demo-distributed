@@ -6,13 +6,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import tk.gushizone.distributed.ds1.domain.ItemA;
 import tk.gushizone.distributed.ds1.service.ItemAService;
 import tk.gushizone.distributed.ds2.domain.ItemB;
 import tk.gushizone.distributed.ds2.service.ItemBService;
 import tk.gushizone.distributed.service.XaService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j

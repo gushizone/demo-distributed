@@ -1,6 +1,7 @@
 package tk.gushizone.distributed.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.gushizone.distributed.ds1.domain.ItemA;
 import tk.gushizone.distributed.ds1.service.ItemAService;
 import tk.gushizone.distributed.ds2.domain.ItemB;
@@ -8,7 +9,6 @@ import tk.gushizone.distributed.ds2.service.ItemBService;
 import tk.gushizone.distributed.service.XaService;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 /**
  * @author gushizone@gmail.com
@@ -23,7 +23,7 @@ public class XaServiceImpl implements XaService {
     private ItemBService itemBService;
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void save() {
 
         itemAService.save(new ItemA(null, "foo..."));
