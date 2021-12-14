@@ -1,0 +1,21 @@
+server:
+  port: 28081
+
+spring:
+  application:
+    name: demo-spring-boot-admin-server
+  cloud:
+    nacos:
+#      server-addr: localhost:8848
+#      username: nacos
+#      password: nacos
+      discovery:
+        enabled: true
+        namespace: demo-spring-boot-admin          # 自定义命名空间ID，需要手动创建，默认是 public
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+
+
+
+

@@ -1,0 +1,69 @@
+server:
+  port: 18081
+
+spring:
+  application:
+    name: demo-spring-boot-admin-client
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo_spring_boot_admin?userUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      #      server-addr: localhost:8848
+      #      username: nacos
+      #      password: nacos
+      discovery:
+        enabled: true
+        namespace: demo-spring-boot-admin          # 自定义命名空间ID，需要手动创建，默认是 public
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:28081
+#        instance:
+#          name: demo-spring-boot-admin-client
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+
+
+################################### actuator ##########################################
+# http://127.0.0.1:18081/actuator                开启的端点，默认仅开启 health 和 info
+#
+# http://127.0.0.1:18081/actuator/health         健康检查端点，默认开启，默认仅显示: {"status":"UP"}
+#   - UP : 正常
+#   - DOWN : 不正常
+#   - OUT_OF_SERVICE : 资源未使用，或不该使用
+#   - UNKNOWN : 未知
+#
+# http://127.0.0.1:18081/actuator/info           信息描述端点，默认开启，默认仅显示: {}
+
+management:
+  endpoint:
+    health:
+      show-details: always        # 显示健康检查细节，如：数据库, 磁盘空间等
+  endpoints:
+    web:
+      exposure:
+        include: '*'              # 暴露所有端点，具体可参考: https://docs.spring.io/spring-boot/docs/2.3.12.RELEASE/reference/html/production-ready-features.html#production-ready-endpoints
+
+# 为 info 端点增加信息
+info:
+  project-name: demo-spring-boot-admin-client
+  author: gushi
+  email: gushizone@gmail.com
+
+########################################################################################
+
+
+
+
+
+
+
