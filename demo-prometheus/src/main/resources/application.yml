@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: demo-prometheus
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo_prometheus?userUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+
+
+# http://localhost:8081/actuator/prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus'
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      instance: ${spring.application.name}
+      hikaricp: ${spring.application.name}
