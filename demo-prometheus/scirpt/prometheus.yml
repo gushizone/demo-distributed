@@ -10,3 +10,11 @@ scrape_configs:
     # 采集服务的地址，设置成上面Spring Boot应用所在服务器的具体地址。
     static_configs:
       - targets: ['host.docker.internal:8081']
+  # node_exporter
+  - job_name: node
+    static_configs:
+      - targets: ['ecs:9100']
+  # mysqld_exporter
+  - job_name: mysql
+    static_configs:
+      - targets: ['host.docker.internal:9104']
