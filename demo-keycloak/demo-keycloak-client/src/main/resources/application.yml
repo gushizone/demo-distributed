@@ -1,0 +1,27 @@
+server:
+  port: 8081
+#  servlet:
+#    context-path: /demo-client
+
+spring:
+  application:
+    name: demo-client
+
+keycloak:
+  enabled: true
+  realm: master
+  resource: demo-client
+  auth-server-url: http://localhost:28080/auth
+  ssl-required: external
+  credentials:
+    secret: daf84029-a089-4e06-a925-7caa7b380548
+#  bearer-only: true
+  use-resource-role-mappings: false
+  cors: true
+  securityConstraints:
+    - authRoles:
+        - "*"
+      securityCollections:
+        - name: common user
+          patterns:          # 需要认证的接口
+            - /api/*
