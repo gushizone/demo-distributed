@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>demo-eureka-server</module>
-        <module>demo-eureka-client</module>
         <module>demo-eureka-client-consumer</module>
         <module>demo-eureka-client-producer</module>
     </modules>
