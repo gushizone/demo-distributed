@@ -1,0 +1,24 @@
+server:
+  port: 13000
+management:
+  server:
+    port: 13001
+
+spring:
+  application:
+    name: demo-hystrix-monitor-turbine
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10000/eureka # 注册中心（集群情况下，可多配置）
+turbine:
+  aggregator:
+    cluster-config: default
+  # 需要监控都服务
+  app-config: demo-hystrix-consumer
+  cluster-name-expression: '"default"' # 默认集群
+  combine-host-port: true # 根据host+port聚合服务，默认是只使用host
+  instanceUrlSuffix:
+    default: actuator/hystrix.stream
+

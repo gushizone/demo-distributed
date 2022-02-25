@@ -1,0 +1,16 @@
+server:
+  port: 12000
+
+spring:
+  application:
+    name: demo-hystrix-monitor-dashboard
+
+
+# 向监控面板中输入监控路径即可查看服务情况（优先使用Turbine监控路径）
+# 监控面板 http://localhost:12000/hystrix
+
+# 监控路径
+# Hystrix监控路径
+# http://localhost:21000/actuator/hystrix.stream
+# Turbine监控路径
+# http://localhost:13000/turbine.stream
