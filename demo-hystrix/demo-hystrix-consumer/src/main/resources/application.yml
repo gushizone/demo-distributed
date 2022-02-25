@@ -1,0 +1,106 @@
+server:
+  port: 9081
+
+spring:
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册(主要是因为 feign)
+  application:
+    name: demo-hystrix-consumer
+
+
+## actuator
+# http://localhost:8081/actuator/health
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always
+
+
+## feign 配置
+# feign 配置会覆盖 ribbon
+feign:
+  client:
+    config:
+      # 全局配置
+      default:
+        connectTimeout: 2000
+        readTimeout: 5000
+      # 特定服务配置
+      demo-feign-producer:
+        connectTimeout: 2000
+        readTimeout: 8000
+  hystrix:
+    enabled: true # feign 开启 hystrix
+
+
+## ribbon 配置，注意某些配置的首字母大写
+ribbon:
+#  eager-load:  # 关闭懒加载，启用饥饿加载
+#    enabled: true
+#    clients: demo-feign-producer
+  ConnectTimeout: 2000 # 连接超时时间
+  ReadTimeout: 4000 # 响应超时时间
+
+# ribbon 特定服务配置
+#demo-feign-producer:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule # 负载均衡策略
+# 超时重试，
+# 最大超时时间 MAX(Response Time) = (ConnectTimeout + ReadTimeout) * (MaxAutoRetries + 1) * (MaxAutoRetriesNextServer + 1)
+#    OkToRetryOnAllOperations: true # 所有Http方法都可以重试 （这里是为了测试，一般只允许GET或严格幂等都接口）
+#    ConnectTimeout: 1000 # 连接超时时间
+#    ReadTimeout: 2000 # 响应超时时间
+#    MaxAutoRetries: 2 # 每台节点重试次数
+#    MaxAutoRetriesNextServer: 2 # 可重试节点数
+
+
+## hystrix
+hystrix:
+  command:
+    default:
+      fallback:
+        enabled: true # 开启降级，默认开启
+      circuitBreaker: # 熔断器配置
+        enabled: true # 开启熔断，默认开启
+        # 超过n%错误，触发熔断
+        errorThresholdPercentage: 50
+        # n个request之后才进行统计
+        requestVolumeThreshold: 5
+        # 熔断n秒之后进入半开状态
+        sleepWindowInMilliseconds: 10000
+        # 强制关闭/开启熔断开关
+      #        forceClosed: false
+      #        forceOpen: false
+      execution:
+        timeout:
+          enabled: true # 全局超时
+        # 可以指定隔离方式是线程池还是信号量
+        isolation:
+          thread:
+            interruptOnTimeout: true # 超时以后中断线程
+            interruptOnFutureCancel: true # 取消的时候中断线程
+            timeoutInMilliseconds: 5000 # 超时时间，一般 >10000
+      metrics: # 时间窗口配置
+        rollingStats:
+          # 时间窗口统计
+          timeInMilliseconds: 20000
+          # numBuckets: 10
+      #        rollingPercentile:
+      #          # 时间窗口统计
+      #          timeInMilliseconds: 20000
+      #          # numBuckets: 10
+      #          bucketSize: 300
+      requestCache:
+        enabled: true # 开启缓存，默认是开启的
+    # 自定义的 commandKey
+    fetchInfo:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 # 超时时间，一般 >10000
