@@ -6,14 +6,6 @@ spring:
     name: demo-eureka-client-consumer
 
 
-## log ###################################################################
-logging:
-  level:
-    # seata日志
-    "org.springframework.cloud.alibaba.seata.web": debug
-    "io.seata": debug
-############################################################################
-
 ## actuator
 # http://localhost:8081/actuator/health
 management:
@@ -28,20 +20,16 @@ management:
       show-details: always
 
 
-# 关闭懒加载，启用饥饿加载
+## ribbon 配置，注意某些配置的首字母大写
 #ribbon:
-#  eager-load:
+#  eager-load:  # 关闭懒加载，启用饥饿加载
 #    enabled: true
-#    clients: demo-client2
-
-
-# ribbon 全局配置
-#ribbon:
-#  ConnectTimeout: 1000 # 连接超时时间
-#  ReadTimeout: 2000 # 响应超时时间
+#    clients: demo-eureka-client-producer
+#  ConnectTimeout: 2000 # 连接超时时间
+#  ReadTimeout: 4000 # 响应超时时间
 
 # ribbon 特定服务配置
-#demo-client2:
+#demo-eureka-client-producer:
 #  ribbon:
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule # 负载均衡策略
 # 超时重试，
