@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: demo-config-client
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册
+
+## actuator
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always

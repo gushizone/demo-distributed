@@ -1,0 +1,55 @@
+# http://localhost:11000/{application}/{profile}
+# http://localhost:11000/{application}/{profile}/{label}
+# http://localhost:11000/{application}-{profile}.{suffix}
+# http://localhost:11000/{label}/{application}-{profile}.{suffix}
+server:
+  port: 11000
+
+spring:
+  application:
+    name: demo-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gushizone/demo-spring-cloud-config.git
+          force-pull: true # 强制拉取配置文件
+          search-paths: '{application}' # 将配置文件放到接入方服务名称对应文件夹下面
+#          username:
+#          password:
+        # 覆盖属性
+#        overrides:
+#          config:
+#            source: config
+
+# 发送到配置中心或其下节点，所有节点都会刷新配置；或者使用特征量destination指定刷新
+# curl -X POST http://localhost:11000/actuator/bus-refresh
+# curl -X POST http://localhost:11000/actuator/bus-refresh/{destination}
+# rabbitmq-bus
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+#  可选：借助eureka实现高可用
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10000/eureka # 注册中心（集群情况下，可多配置）
+  instance:
+    lease-renewal-interval-in-seconds: 10 # 租约更新时间（心跳上报间隔时间）
+    lease-expiration-duration-in-seconds: 20 # 租约到期持续时间（心跳上报最大容忍时间）
+
+# actuator 配置
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always
