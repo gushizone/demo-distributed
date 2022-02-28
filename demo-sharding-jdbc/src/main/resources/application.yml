@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: sharding           # 分库分表
+#    active: rw                 # 读写分离
+  application:
+    name: demo-sharding-jdbc
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+
+
+
+
+
