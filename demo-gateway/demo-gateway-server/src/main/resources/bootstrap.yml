@@ -1,0 +1,41 @@
+# http://localhost:30000/actuator/gateway/routes
+# http://localhost:30000/actuator/gateway/refresh 刷新路由缓存
+# post http://localhost:30000/actuator/gateway/routes/{id} 动态添加路由规则
+# delete http://localhost:30000/actuator/gateway/routes/{id} 动态删除路由规则
+server:
+  port: 30000
+
+spring:
+  application:
+    name: demo-gateway
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义的重载，即bean同名覆盖注册
+  cloud:
+    gateway:
+      discovery:
+        locator:    # 自动路由 + 小写服务id：/demo-gateway-client/** -> [demo-gateway-client] | http://localhost:30000/demo-gateway-client1/client1/ping/c1-c2
+          enabled: true # 自动路由
+          lower-case-service-id: true
+
+
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://localhost:10000/eureka # 注册中心（集群情况下，可多配置）
+  instance:
+    lease-renewal-interval-in-seconds: 10 # 租约更新时间（心跳上报间隔时间）
+    lease-expiration-duration-in-seconds: 20 # 租约到期持续时间（心跳上报最大容忍时间）
+
+
+# actuator 配置
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always

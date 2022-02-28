@@ -1,0 +1,22 @@
+server:
+  port: 9081
+  servlet:
+    context-path: /client2
+
+spring:
+  application:
+    name: demo-gateway-client2
+
+
+## actuator
+# http://localhost:8081/actuator/health
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always

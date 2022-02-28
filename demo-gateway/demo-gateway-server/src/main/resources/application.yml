@@ -1,0 +1,5 @@
+
+demo:
+  gateway:
+    cache:
+      enabled: false
