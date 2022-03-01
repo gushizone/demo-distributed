@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: demo-sentinel-client-producer
+  cloud:
+    nacos:
+#      server-addr: localhost:8848
+#      username: nacos
+#      password: nacos
+      discovery:
+        enabled: true
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+        namespace:
+        group: DEFAULT_GROUP
+      config:
+        enabled: false
+        file-extension: yml
+        namespace:
+        group: DEFAULT_GROUP

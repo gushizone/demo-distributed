@@ -1,0 +1,32 @@
+[
+    {
+        "resource":"/sentinel/degrade/url",
+        "limitApp":"default",
+        "grade":2,
+        "count":1,
+        "minRequestAmount":1,
+        "slowRatioThreshold":1,
+        "statIntervalMs":1000,
+        "timeWindow":100
+    },
+    {
+        "resource":"degradeResource",
+        "limitApp":"default",
+        "grade":2,
+        "count":1,
+        "minRequestAmount":1,
+        "slowRatioThreshold":1,
+        "statIntervalMs":1000,
+        "timeWindow":100
+    },
+    {
+        "resource":"GET:http://demo-sentinel-client-producer/ping",
+        "limitApp":"default",
+        "grade":2,
+        "count":1,
+        "minRequestAmount":1,
+        "slowRatioThreshold":1,
+        "statIntervalMs":1000,
+        "timeWindow":100
+    }
+]

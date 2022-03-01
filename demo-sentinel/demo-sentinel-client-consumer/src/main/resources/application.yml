@@ -1,0 +1,4 @@
+# 开启 feign 对 sentinel 的支持
+feign:
+  sentinel:
+    enabled: true
