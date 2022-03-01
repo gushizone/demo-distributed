@@ -1,0 +1,63 @@
+server:
+  port: 9081
+
+
+spring:
+  application:
+    name: demo-stream-consumer
+## rabbitmq
+  rabbitmq:
+#    listener.default-requeue-rejected: true # 全局重新入队配置
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /stream   # 需要手动创建
+  cloud:
+    stream:
+      default-binder: rabbit
+      instanceCount: 2  # 消费者实例总数
+      instanceIndex: 0  # 当前消费实例的索引号，最大为 instanceCount - 1
+      rabbit:
+        bindings:
+          delayed-consumer.consumer.delayed-exchange: true # 是否开启延时队列
+          requeue-consumer.consumer.requeueRejected: true # 是否开启重新入队
+          dlq-consumer.consumer.auto-bind-dlq: true # 是否自动绑定死信队列
+      bindings:
+        # 将两个channel都绑定到broadcast
+        # 广播
+        broadcast-consumer.destination: broadcast
+        # 分组单播 - 消费分组
+        group-consumer.destination: group
+        group-consumer.group: group-A
+        # 消费分区
+        group-consumer.consumer.partitioned: true # 是否启用消费分区
+        # 延时队列
+        delayed-consumer.destination: delayed
+        # 重试
+        retry-consumer.destination: retry
+        retry-consumer.consumer.max-attempts: 2 # 尝试次数（消费者本机重试），1表示不重试，默认为3
+        # 重新入队
+        requeue-consumer.destination: requeue
+        requeue-consumer.consumer.max-attempts: 1 # 重新入队时，尝试次数一定要为1
+        requeue-consumer.group: requeue-group
+        # 死信队列
+        dlq-consumer.destination: dlq
+        dlq-consumer.consumer.max-attempts: 2
+        dlq-consumer.group: dlq-group
+        # 降级 - 错误通道
+        fallback-consumer.destination: fallback
+        fallback-consumer.consumer.max-attempts: 2
+        fallback-consumer.group: fallback-group
+
+
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,50 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: demo-stream-producer
+## rabbitmq
+  rabbitmq:
+#    listener.default-requeue-rejected: true # 全局重新入队配置
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /stream   # 需要手动创建
+  cloud:
+    stream:
+      default-binder: rabbit
+      rabbit:
+        bindings:
+          delayed-producer.producer.delayed-exchange: true # 是否开启延时队列
+      bindings:
+        # 将两个channel都绑定到broadcast
+        # 广播
+        broadcast-producer.destination: broadcast
+        # 分组单播 - 消费分组
+        group-producer.destination: group
+        # 消费分区
+        group-producer.producer.partition-count: 2 # 两个消费分区
+        group-producer.producer.partition-key-expression: "1" # SpEL(Key resolver), 只有节点索引为1才能消费数据
+        # 延时队列
+        delayed-producer.destination: delayed
+        # 重试
+        retry-producer.destination: retry
+        # 重新入队
+        requeue-producer.destination: requeue
+        # 死信队列
+        dlq-producer.destination: dlq
+        # 降级 - 错误通道
+        fallback-producer.destination: fallback
+
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always
