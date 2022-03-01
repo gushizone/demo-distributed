@@ -1,0 +1,41 @@
+CREATE DATABASE `demo_seata_client_producer` CHARACTER SET 'utf8mb4';
+use `demo_seata_client_producer`;
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for stock
+-- ----------------------------
+DROP TABLE IF EXISTS `stock`;
+CREATE TABLE `stock`
+(
+    `id`      bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `item_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `stock`   int(255)            NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8mb4;
+
+-- ----------------------------
+-- Table structure for undo_log
+-- ----------------------------
+DROP TABLE IF EXISTS `undo_log`;
+CREATE TABLE `undo_log`
+(
+    `id`            bigint(20)   NOT NULL AUTO_INCREMENT,
+    `branch_id`     bigint(20)   NOT NULL,
+    `xid`           varchar(100) NOT NULL,
+    `context`       varchar(128) NOT NULL,
+    `rollback_info` longblob     NOT NULL,
+    `log_status`    int(11)      NOT NULL,
+    `log_created`   datetime     NOT NULL,
+    `log_modified`  datetime     NOT NULL,
+    `ext`           varchar(100) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+SET FOREIGN_KEY_CHECKS = 1;
