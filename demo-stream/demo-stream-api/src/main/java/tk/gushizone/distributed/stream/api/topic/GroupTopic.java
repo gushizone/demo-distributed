@@ -1,23 +1,12 @@
 package tk.gushizone.distributed.stream.api.topic;
 
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.SubscribableChannel;
+import tk.gushizone.distributed.stream.api.topic.input.GroupInput;
+import tk.gushizone.distributed.stream.api.topic.output.GroupOutput;
 
 /**
  * @author gushizone@gmail.com
  * @date 2021/9/7 2:19 下午
  */
-public interface GroupTopic {
-
-    String INPUT = "group-consumer";
-    String OUTPUT = "group-producer";
-
-    @Input(INPUT)
-    SubscribableChannel input();
-
-    @Output(OUTPUT)
-    MessageChannel output();
+public interface GroupTopic extends GroupOutput, GroupInput {
 
 }

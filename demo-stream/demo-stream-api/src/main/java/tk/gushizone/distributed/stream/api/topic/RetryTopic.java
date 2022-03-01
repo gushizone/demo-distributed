@@ -1,23 +1,12 @@
 package tk.gushizone.distributed.stream.api.topic;
 
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.SubscribableChannel;
+import tk.gushizone.distributed.stream.api.topic.input.RequeueInput;
+import tk.gushizone.distributed.stream.api.topic.output.RetryOutput;
 
 /**
  * @author gushizone@gmail.com
  * @date 2021/9/7 2:19 下午
  */
-public interface RetryTopic {
-
-    String INPUT = "retry-consumer";
-    String OUTPUT = "retry-producer";
-
-    @Input(INPUT)
-    SubscribableChannel input();
-
-    @Output(OUTPUT)
-    MessageChannel output();
+public interface RetryTopic extends RetryOutput, RequeueInput {
 
 }
