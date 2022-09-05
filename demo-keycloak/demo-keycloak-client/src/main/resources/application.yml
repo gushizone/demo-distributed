@@ -8,13 +8,13 @@ spring:
     name: demo-client
 
 keycloak:
-  enabled: true
-  realm: master
+  enabled: false
+  realm: dev
   resource: demo-client
-  auth-server-url: http://localhost:28080/auth
+  auth-server-url: http://127.0.0.1:8080/auth
   ssl-required: external
   credentials:
-    secret: daf84029-a089-4e06-a925-7caa7b380548
+    secret: 44a431c9-202a-4728-b834-d10d806ded69
 #  bearer-only: true
   use-resource-role-mappings: false
   cors: true
@@ -25,3 +25,19 @@ keycloak:
         - name: common user
           patterns:          # 需要认证的接口
             - /api/*
+
+oidc:
+  enabled: true
+  oauth2-oidc-discovery-endpoint: http://127.0.0.1:18080/auth/realms/demo/.well-known/openid-configuration
+  # demo-client1
+  client-id: demo-client1
+  client-secret: ef1da51a-9a2d-46f8-b01b-a0e60d34cd51
+  scope: email openid profile
+  redirect-url: http://127.0.0.1:9081/oidc/codeToToken
+  logout-redirect-url: http://127.0.0.1:9081/oidc/home
+  # demo-client1
+#  client-id: demo-client2
+#  client-secret: c16a46eb-4a63-43b7-92b8-975d40665bfd
+#  scope: email openid profile
+#  redirect-url: http://127.0.0.1:9082/sso
+#  logout-redirect-url: http://127.0.0.1:9082/rec

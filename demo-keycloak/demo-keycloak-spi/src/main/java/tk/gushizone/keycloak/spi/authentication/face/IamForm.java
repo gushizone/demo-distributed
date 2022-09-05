@@ -2,6 +2,8 @@ package tk.gushizone.keycloak.spi.authentication.face;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Maps;
+import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.authenticators.browser.UsernamePasswordForm;
@@ -15,6 +17,8 @@ import org.keycloak.services.messages.Messages;
 import tk.gushizone.keycloak.spi.authentication.face.properties.IamFormFaceProperties;
 
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
 
 /**
  * @author gushizone@gmail.com
@@ -35,7 +39,21 @@ public class IamForm extends UsernamePasswordForm {
     public static final String LOGIN_TYPE_FACE = "face@qq.com";
     public static final String FACE_ID = AuthenticationManager.FORM_USERNAME;
 
+    /**
+     * 进入登录页面前，调用此方法
+     */
+    @Override
+    public void authenticate(AuthenticationFlowContext context) {
+        log.warn("================ authenticate");
 
+
+
+        super.authenticate(context);
+    }
+
+    /**
+     * 点击登录，执行此方法校验
+     */
     @Override
     public void action(AuthenticationFlowContext context) {
         MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();

@@ -18,3 +18,28 @@ scrape_configs:
   - job_name: mysql
     static_configs:
       - targets: ['host.docker.internal:9104']
+  # keycloak_exporter
+#  - job_name: keycloak
+#    # 多久采集一次数据
+#    scrape_interval: 15s
+#    # 采集时的超时时间
+#    scrape_timeout: 10s
+#    # 采集的路径是啥
+#    metrics_path: '/auth/realms/master/metrics'
+#    static_configs:
+#      - targets: [ 'host.docker.internal:18080']
+  # pushgateway
+  - job_name: pushgateway
+    # 保持原 instance，job 标签
+    honor_labels: true
+    static_configs:
+      - targets: [ 'host.docker.internal:9091']
+        labels:
+          pushgateway: "true"
+    # 增加新标签适配 dashboard
+    metric_relabel_configs:
+      - action: replace
+        source_labels: [ "instance" ]
+        regex: (.*)
+        replacement: $1
+        target_label: "kubernetes_pod_name"
