@@ -1,7 +1,0 @@
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:10000/eureka # 注册中心（集群情况下，可多配置）
-  instance:
-    lease-renewal-interval-in-seconds: 10 # 租约更新时间（心跳上报间隔时间）
-    lease-expiration-duration-in-seconds: 20 # 租约到期持续时间（心跳上报最大容忍时间）

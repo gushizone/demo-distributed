@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: demo-at-producer
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo_seata_client_producer?userUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: ${spring.application.name}-tx-group
+
+# 这里 seata 单独集成, 避免升级 spring-cloud
+# https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
+seata:
+  enabled: true 	# 默认是关闭的
+  application-id: ${spring.application.name}
+  tx-service-group: ${spring.application.name}-tx-group   # 默认事务分组名称 todo 与 spring-cloud 整合时失效
+#  enable-auto-data-source-proxy: false  # 默认是开启的AT模式需要开启, TCC关闭
+  service:
+    vgroupMapping:
+      demo-at-producer-tx-group: DEFAULT	 # Key 要和事务分组名称保持一致, Value 为TC集群名称
+  registry:           # 通过nacos的服务发现 和 nacos建立连接 根据TC注册配置 对应填写即可
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: ${spring.cloud.nacos.server-addr}
+      namespace:
+      username: ${spring.cloud.nacos.username}
+      password: ${spring.cloud.nacos.password}
+      cluster: DEFAULT
+      group: DEFAULT_GROUP
+# 默认使用 file, 这个是 seata.service.* 生效(核心是service.vgroupMapping.*)
+#  config:
+#    type: nacos
+#    nacos:
+#      server-addr: ${spring.cloud.nacos.server-addr}
+#      namespace:
+#      username: ${spring.cloud.nacos.username}
+#      password: ${spring.cloud.nacos.password}
+#      group: DEFAULT_GROUP
+#      dataId: seata-server.properties    # 主要是 service.vgroupMapping.* 配置, 为了方便管理 seata server/client 使用同一个配置文件
+
+## mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+
+
+## log
+logging:
+  level:
+    # seata log
+    "org.springframework.cloud.alibaba.seata.web": debug
+    "io.seata": debug
+
+
+## actuator
+# http://localhost:8081/actuator/health
+management:
+  security:
+    enabled: false # 关闭安全检查 （仅供测试）
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有接口
+  endpoint:
+    health:
+      show-details: always
