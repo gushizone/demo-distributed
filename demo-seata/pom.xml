@@ -13,8 +13,6 @@
     <artifactId>demo-seata</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>demo-seata-client-producer</module>
-        <module>demo-seata-client-consumer</module>
         <module>demo-seata-tcc</module>
         <module>demo-seata-at</module>
     </modules>
