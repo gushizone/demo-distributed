@@ -8,4 +8,5 @@ public interface ItemStockService {
 
     void save();
 
+    void tccSave();
 }

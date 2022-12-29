@@ -74,7 +74,7 @@ management:
     health:
       show-details: always
 
-# 避免 seata 因为 seata 超时
+# 避免 seata 因为 feign 超时
 feign:
   client:
     config:

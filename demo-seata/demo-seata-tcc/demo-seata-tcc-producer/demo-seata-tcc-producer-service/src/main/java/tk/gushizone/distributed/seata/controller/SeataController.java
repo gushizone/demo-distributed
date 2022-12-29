@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import tk.gushizone.distributed.seata.api.SeataProducerApi;
 import tk.gushizone.distributed.seata.domain.Stock;
+import tk.gushizone.distributed.seata.service.StockCreateTccService;
 import tk.gushizone.distributed.seata.service.StockService;
 
 /**
@@ -17,18 +18,33 @@ public class SeataController implements SeataProducerApi {
 
     @Autowired
     private StockService stockService;
+    @Autowired
+    private StockCreateTccService stockCreateTccService;
 
     @Override
-    public String save() {
+    public String save(Long id) {
 
 
         stockService.save(Stock.builder()
-                .itemId(1L)
+                .itemId(id)
                 .stock(100)
                 .build());
 
+
+
         // todo
         int i = 1/0;
+
+        return "OK";
+    }
+
+    @Override
+    public String tccSave(Long id) {
+
+        stockCreateTccService.prepare(null, id);
+
+//        // todo
+//        int i = 1/0;
 
         return "OK";
     }

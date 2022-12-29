@@ -17,7 +17,7 @@ seata:
   enabled: true 	# 默认是关闭的
   application-id: ${spring.application.name}
   tx-service-group: ${spring.application.name}-tx-group   # 默认事务分组名称 todo 与 spring-cloud 整合时失效
-#  enable-auto-data-source-proxy: false  # 默认是开启的AT模式需要开启, TCC关闭
+  enable-auto-data-source-proxy: false  # 默认是开启的AT模式需要开启, TCC关闭
   service:
     vgroupMapping:
       demo-tcc-producer-tx-group: DEFAULT	 # Key 要和事务分组名称保持一致, Value 为TC集群名称

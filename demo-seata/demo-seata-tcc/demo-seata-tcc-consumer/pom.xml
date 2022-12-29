@@ -107,6 +107,24 @@
         <!--    </exclusions>-->
         <!--</dependency>-->
 
+        <!-- https://github.com/redisson/redisson/tree/master/redisson-spring-boot-starter -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.16.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson-spring-data-25</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-data-21</artifactId>
+            <version>3.16.4</version>
+        </dependency>
+
         <dependency>
             <groupId>tk.gushizone</groupId>
             <artifactId>demo-seata-tcc-producer-api</artifactId>

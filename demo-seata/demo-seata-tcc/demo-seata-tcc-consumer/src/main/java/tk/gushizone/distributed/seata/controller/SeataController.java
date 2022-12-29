@@ -25,5 +25,11 @@ public class SeataController {
         return "OK";
     }
 
+    @PostMapping("/tcc/itemStock")
+    public String itemStockTcc() {
 
+        itemStockService.tccSave();
+
+        return "OK";
+    }
 }

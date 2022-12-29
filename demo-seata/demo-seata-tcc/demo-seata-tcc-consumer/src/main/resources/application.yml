@@ -6,6 +6,10 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    password: redis
+    host: 127.0.0.1
+    port: 6379
   cloud:
     alibaba:
       seata:
@@ -17,7 +21,7 @@ seata:
   enabled: true    # 默认是关闭的
   application-id: ${spring.application.name}
   tx-service-group: ${spring.application.name}-tx-group   # 默认事务分组名称
-#    enable-auto-data-source-proxy: false  # 默认是开启的AT模式需要开启, TCC关闭
+  enable-auto-data-source-proxy: false  # 默认是开启的AT模式需要开启, TCC关闭
   service:
     vgroupMapping:
       demo-tcc-consumer-tx-group: DEFAULT     # Key 要和事务分组名称保持一致, Value 为TC集群名称
@@ -41,7 +45,9 @@ seata:
 #      password: ${spring.cloud.nacos.password}
 #      group: DEFAULT_GROUP
 #      dataId: seata-server.properties    # 主要是 service.vgroupMapping.* 配置, 为了方便管理 seata server/client 使用同一个配置文件
-
+#  client:
+#    tm:
+#      commit-retry-count: 5      # todo 无效, 无限重试了?
 
 ## mybatis-plus
 mybatis-plus:
@@ -74,7 +80,7 @@ management:
     health:
       show-details: always
 
-# 避免 seata 因为 seata 超时
+# 避免 seata 因为 feign 超时
 feign:
   client:
     config:
