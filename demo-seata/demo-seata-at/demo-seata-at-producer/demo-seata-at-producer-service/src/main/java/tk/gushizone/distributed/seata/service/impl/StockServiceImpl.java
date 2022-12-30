@@ -12,6 +12,18 @@ import tk.gushizone.distributed.seata.service.StockService;
 @Service
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements StockService {
 
+
+    @Override
+    public void atSave(Long itemId) {
+
+        this.save(Stock.builder()
+                .itemId(itemId)
+                .stock(100)
+                .build());
+
+//         todo
+//        int i = 1/0;
+    }
 }
 
 

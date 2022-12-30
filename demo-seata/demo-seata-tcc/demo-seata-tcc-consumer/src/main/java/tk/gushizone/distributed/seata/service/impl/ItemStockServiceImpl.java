@@ -47,7 +47,7 @@ public class ItemStockServiceImpl implements ItemStockService {
     public void tccSave() {
 
         Item item = Item.builder()
-                .name("foo")
+                .name("foo3")
                 .remark("remark")
                 .build();
 
@@ -56,6 +56,6 @@ public class ItemStockServiceImpl implements ItemStockService {
         seataProducerApi.tccSave(item.getId());
 
         // todo
-//        int i = 1/0;
+        int i = 1/0;
     }
 }

@@ -19,16 +19,10 @@ public class SeataController implements SeataProducerApi {
     private StockService stockService;
 
     @Override
-    public String save() {
+    public String save(Long itemId) {
 
 
-        stockService.save(Stock.builder()
-                .itemId(1L)
-                .stock(100)
-                .build());
-
-        // todo
-        int i = 1/0;
+        stockService.atSave(itemId);
 
         return "OK";
     }

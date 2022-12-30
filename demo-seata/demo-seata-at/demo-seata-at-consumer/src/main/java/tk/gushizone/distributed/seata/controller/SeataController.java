@@ -17,7 +17,7 @@ public class SeataController {
     @Autowired
     private ItemStockService itemStockService;
 
-    @PostMapping("/itemStock")
+    @PostMapping("/at/itemStock")
     public String itemStock() {
 
         itemStockService.save();

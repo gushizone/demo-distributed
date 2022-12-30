@@ -20,8 +20,8 @@ spring:
 seata:
   enabled: true    # 默认是关闭的
   application-id: ${spring.application.name}
-  tx-service-group: ${spring.application.name}-tx-group   # 默认事务分组名称
-  enable-auto-data-source-proxy: false  # 默认是开启的AT模式需要开启, TCC关闭
+  tx-service-group: ${spring.application.name}-tx-group   # 默认事务分组名称 todo 与 spring-cloud 整合时失效 ?
+  enable-auto-data-source-proxy: false  # 是否开启数据源代理(AT 模式), AT 和 TCC 是可以并存的
   service:
     vgroupMapping:
       demo-tcc-consumer-tx-group: DEFAULT     # Key 要和事务分组名称保持一致, Value 为TC集群名称
@@ -44,7 +44,7 @@ seata:
 #      username: ${spring.cloud.nacos.username}
 #      password: ${spring.cloud.nacos.password}
 #      group: DEFAULT_GROUP
-#      dataId: seata-server.properties    # 主要是 service.vgroupMapping.* 配置, 为了方便管理 seata server/client 使用同一个配置文件
+#      dataId: ${spring.application.name}.yml    # 主要是 service.vgroupMapping.* 配置
 #  client:
 #    tm:
 #      commit-retry-count: 5      # todo 无效, 无限重试了?

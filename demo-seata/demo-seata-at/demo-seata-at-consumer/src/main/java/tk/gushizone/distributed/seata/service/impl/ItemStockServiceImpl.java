@@ -24,11 +24,16 @@ public class ItemStockServiceImpl implements ItemStockService {
     @GlobalTransactional(name = "item-stock", rollbackFor = Exception.class)
     public void save() {
 
-        itemService.save(Item.builder()
+        Item item = Item.builder()
                 .name("foo")
                 .remark("remark")
-                .build());
+                .build();
 
-        seataProducerApi.save();
+        itemService.save(item);
+
+        seataProducerApi.save(item.getId());
+
+        //  todo
+        int i = 1/0;
     }
 }
